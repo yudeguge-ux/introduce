@@ -1,21 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  User, 
-  Briefcase, 
-  BookOpen, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Code, 
-  TrendingUp, 
-  Shield, 
-  Cpu, 
-  ChevronRight,
-  Download,
-  ExternalLink,
-  MessageSquare,
-  Award
-} from 'lucide-react';
+
+// --- 自定义 SVG 图标组件 (替代 lucide-react 以解决导入错误) ---
+const Icon = ({ children, size = 24, className = "" }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    {children}
+  </svg>
+);
+
+const UserIcon = (props) => (
+  <Icon {...props}><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></Icon>
+);
+
+const BriefcaseIcon = (props) => (
+  <Icon {...props}><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></Icon>
+);
+
+const BookOpenIcon = (props) => (
+  <Icon {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>
+);
+
+const MailIcon = (props) => (
+  <Icon {...props}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></Icon>
+);
+
+const PhoneIcon = (props) => (
+  <Icon {...props}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>
+);
+
+const MapPinIcon = (props) => (
+  <Icon {...props}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></Icon>
+);
+
+const CodeIcon = (props) => (
+  <Icon {...props}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></Icon>
+);
+
+const TrendingUpIcon = (props) => (
+  <Icon {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></Icon>
+);
+
+const ShieldIcon = (props) => (
+  <Icon {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></Icon>
+);
+
+const CpuIcon = (props) => (
+  <Icon {...props}><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></Icon>
+);
+
+const ChevronRightIcon = (props) => (
+  <Icon {...props}><path d="m9 18 6-6-6-6"/></Icon>
+);
+
+const DownloadIcon = (props) => (
+  <Icon {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></Icon>
+);
+
+const ExternalLinkIcon = (props) => (
+  <Icon {...props}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></Icon>
+);
+
+const MessageSquareIcon = (props) => (
+  <Icon {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>
+);
+
+const AwardIcon = (props) => (
+  <Icon {...props}><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></Icon>
+);
+
+const LayersIcon = (props) => (
+  <Icon {...props}>
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </Icon>
+);
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -39,10 +107,10 @@ const App = () => {
   };
 
   const skills = [
-    { name: "交易系统架构", icon: <Layers size={18} />, desc: "多资产STP链路、自动询价、策略报价" },
-    { name: "AI 产品落地", icon: <Cpu size={18} />, desc: "NLP意图识别、NER、决策引擎" },
-    { name: "风险管理", icon: <Shield size={18} />, desc: "Pre-trade风控、授信/限额管理" },
-    { name: "产品全生命周期", icon: <TrendingUp size={18} />, desc: "Scrum敏捷、需求拆解、PRD/交付" }
+    { name: "交易系统架构", icon: <LayersIcon size={18} />, desc: "多资产STP链路、自动询价、策略报价" },
+    { name: "AI 产品落地", icon: <CpuIcon size={18} />, desc: "NLP意图识别、NER、决策引擎" },
+    { name: "风险管理", icon: <ShieldIcon size={18} />, desc: "Pre-trade风控、授信/限额管理" },
+    { name: "产品全生命周期", icon: <TrendingUpIcon size={18} />, desc: "Scrum敏捷、需求拆解、PRD/交付" }
   ];
 
   const experiences = [
@@ -85,7 +153,7 @@ const App = () => {
               <a key={idx} href={`#${['home', 'skills', 'experience', 'education'][idx]}`} className="hover:text-indigo-400 transition-colors">{item}</a>
             ))}
             <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full text-xs transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2">
-              <Download size={14} /> 下载简历
+              <DownloadIcon size={14} /> 下载简历
             </button>
           </div>
         </div>
@@ -116,14 +184,14 @@ const App = () => {
               </p>
               
               <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-10 text-sm text-slate-400">
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><Phone size={16}/> {profile.phone}</div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><Mail size={16}/> {profile.email}</div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><MapPin size={16}/> {profile.location}</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><PhoneIcon size={16}/> {profile.phone}</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><MailIcon size={16}/> {profile.email}</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><MapPinIcon size={16}/> {profile.location}</div>
               </div>
 
               <div className="flex gap-4 justify-center md:justify-start">
                 <button className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold shadow-xl shadow-indigo-600/20 transition-all flex items-center gap-2">
-                   立即联络 <ChevronRight size={18} />
+                   立即联络 <ChevronRightIcon size={18} />
                 </button>
                 <button className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl font-bold transition-all">
                   查看项目集
@@ -134,8 +202,7 @@ const App = () => {
             <div className="w-64 h-64 md:w-80 md:h-80 relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl rotate-6 group-hover:rotate-3 transition-transform duration-500"></div>
               <div className="absolute inset-0 bg-slate-800 rounded-3xl flex items-center justify-center overflow-hidden border border-white/10">
-                {/* 占位头像或图标 */}
-                <User size={120} className="text-slate-700" />
+                <UserIcon size={120} className="text-slate-700" />
               </div>
             </div>
           </div>
@@ -188,7 +255,7 @@ const App = () => {
                       
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-indigo-400 font-bold text-sm">{exp.period}</span>
-                        <Briefcase size={16} className="text-slate-600" />
+                        <BriefcaseIcon size={16} className="text-slate-600" />
                       </div>
                       <h3 className="text-2xl font-bold text-white mb-1">{exp.company}</h3>
                       <p className="text-indigo-300 font-medium mb-6">{exp.role}</p>
@@ -227,7 +294,7 @@ const App = () => {
             {/* 教育背景 */}
             <div>
               <div className="flex items-center gap-3 mb-10">
-                <BookOpen className="text-indigo-500" />
+                <BookOpenIcon className="text-indigo-500" />
                 <h2 className="text-2xl font-bold text-white">教育背景</h2>
               </div>
               <div className="space-y-8">
@@ -249,7 +316,7 @@ const App = () => {
             {/* 实习/研究项目 */}
             <div>
               <div className="flex items-center gap-3 mb-10">
-                <Award className="text-indigo-500" />
+                <AwardIcon className="text-indigo-500" />
                 <h2 className="text-2xl font-bold text-white">研究与实习</h2>
               </div>
               <div className="space-y-4">
@@ -272,10 +339,10 @@ const App = () => {
           </div>
           <div className="flex justify-center gap-6 mb-12">
             <a href={`mailto:${profile.email}`} className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
-              <Mail size={20} />
+              <MailIcon size={20} />
             </a>
             <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer group relative">
-              <MessageSquare size={20} />
+              <MessageSquareIcon size={20} />
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-white text-black text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                 微信: 15254109003
               </div>
@@ -303,18 +370,10 @@ const ProjectSnippet = ({ title, desc }) => (
   <div className="p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-all">
     <div className="flex justify-between items-center mb-1">
       <h4 className="text-sm font-bold text-slate-200">{title}</h4>
-      <ExternalLink size={12} className="text-slate-600" />
+      <ExternalLinkIcon size={12} className="text-slate-600" />
     </div>
     <p className="text-xs text-slate-500">{desc}</p>
   </div>
-);
-
-const Layers = ({ size, className }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-    <polyline points="2 17 12 22 22 17" />
-    <polyline points="2 12 12 17 22 12" />
-  </svg>
 );
 
 export default App;
