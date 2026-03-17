@@ -1,251 +1,320 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Layout, 
-  Bot, 
-  ShieldCheck, 
-  GitBranch, 
+  User, 
   Briefcase, 
-  GraduationCap, 
-  BarChart2, 
-  Search, 
+  BookOpen, 
+  Mail, 
+  Phone, 
+  MapPin, 
   Code, 
-  BookOpen,
-  ChevronRight
+  TrendingUp, 
+  Shield, 
+  Cpu, 
+  ChevronRight,
+  Download,
+  ExternalLink,
+  MessageSquare,
+  Award
 } from 'lucide-react';
 
 const App = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 简历核心数据
+  const profile = {
+    name: "夏 雨",
+    title: "金融交易智能化产品经理",
+    subTitle: "专注银行间交易执行与前置风控中台",
+    phone: "15254109003",
+    email: "1196350794@qq.com",
+    location: "上海市浦东新区",
+    summary: "3年金融交易智能化产品经验，主导设计多资产OMS与AI询报价系统。具备金融硕士背景与数据能力，擅长在高合规场景下完成AI产品落地与系统级架构设计。"
+  };
+
+  const skills = [
+    { name: "交易系统架构", icon: <Layers size={18} />, desc: "多资产STP链路、自动询价、策略报价" },
+    { name: "AI 产品落地", icon: <Cpu size={18} />, desc: "NLP意图识别、NER、决策引擎" },
+    { name: "风险管理", icon: <Shield size={18} />, desc: "Pre-trade风控、授信/限额管理" },
+    { name: "产品全生命周期", icon: <TrendingUp size={18} />, desc: "Scrum敏捷、需求拆解、PRD/交付" }
+  ];
+
+  const experiences = [
+    {
+      company: "中汇亿达金融信息技术有限公司 (ComStar)",
+      role: "产品需求分析师",
+      period: "2023.03 – 2026.03",
+      projects: [
+        {
+          name: "银行间智能交易执行系统 (AI询报价机器人)",
+          highlights: [
+            "构建覆盖现券、IRS、回购的STP链路，实现自动询价与风控校验。",
+            "支撑9家大型银行自动化辅助交易，单机构日均处理100+笔询价。",
+            "打造标准化API集成中枢，连接iDeal、分销平台及策略系统。"
+          ]
+        },
+        {
+          name: "多资产统一订单管理系统 (OMS)",
+          highlights: [
+            "重构交易链路，机构自动化处理占比达75%，显著缩短达成周期。",
+            "前移Pre-trade风控至意向阶段，强化合规控制。",
+            "基于SoD原则设计矩阵式权限，满足“前中后台分离”内控要求。"
+          ]
+        }
+      ]
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30">
-      
-      {/* 顶部导航 */}
-      <nav className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-slate-800/50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            夏雨 | Xia Yu
-          </span>
-          <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
-            <a href="#about" className="hover:text-blue-400 transition-colors">核心能力</a>
-            <a href="#experience" className="hover:text-blue-400 transition-colors">工作经历</a>
-            <a href="#education" className="hover:text-blue-400 transition-colors">教育背景</a>
+    <div className="min-h-screen bg-[#050505] text-slate-200 font-sans selection:bg-indigo-500/30">
+      {/* 导航栏 */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-3' : 'bg-transparent py-6'}`}>
+        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
+          <div className="text-xl font-bold tracking-tighter text-white flex items-center gap-2">
+            <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-sm">夏</div>
+            <span>XIA YU</span>
           </div>
-          <a href="mailto:1196350794@qq.com" className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-lg shadow-blue-900/20">
-            联系我
-          </a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+            {['首页', '能力', '经历', '教育'].map((item, idx) => (
+              <a key={idx} href={`#${['home', 'skills', 'experience', 'education'][idx]}`} className="hover:text-indigo-400 transition-colors">{item}</a>
+            ))}
+            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full text-xs transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2">
+              <Download size={14} /> 下载简历
+            </button>
+          </div>
         </div>
       </nav>
 
-      <main className="pt-32 pb-20 px-6">
-        {/* Hero Section */}
-        <section className="max-w-4xl mx-auto text-center mb-24">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight text-white">
-            金融交易智能化 <br/>
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              产品经理
-            </span>
-          </h1>
-          <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            3年金融交易中台经验，专注构建银行间交易执行与前置风控系统。主导多资产OMS与AI询报价系统设计，实现复杂交易链路的自动化与工程化重构。
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <Phone className="w-4 h-4 text-blue-400" /> 15254109003
-            </div>
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <Mail className="w-4 h-4 text-blue-400" /> 1196350794@qq.com
-            </div>
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <MapPin className="w-4 h-4 text-blue-400" /> 上海市浦东新区
-            </div>
-          </div>
-        </section>
+      {/* Hero Section */}
+      <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-600/10 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"></div>
+        </div>
 
-        {/* 核心能力 Grid */}
-        <section id="about" className="max-w-6xl mx-auto mb-32">
-          <h2 className="text-2xl font-bold mb-12 flex items-center gap-3">
-            <span className="w-8 h-[2px] bg-blue-500"></span> 核心能力
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <CapabilityCard 
-              icon={<Layout className="w-6 h-6" />}
-              title="交易系统架构"
-              desc="构建多资产智能交易架构，实现自动询价、策略报价与实时风控的STP链路。"
-            />
-            <CapabilityCard 
-              icon={<Bot className="w-6 h-6" />}
-              title="AI产品落地"
-              desc="精通NLP意图识别、NER在金融非结构化文本中的应用，设计智能交互机器人。"
-            />
-            <CapabilityCard 
-              icon={<ShieldCheck className="w-6 h-6" />}
-              title="风控管理逻辑"
-              desc="深度理解现券、IRS、回购交易机制，具备Pre-trade风险控制点位设计经验。"
-            />
-            <CapabilityCard 
-              icon={<GitBranch className="w-6 h-6" />}
-              title="敏捷产品管理"
-              desc="全生命周期需求管理，Scrum敏捷实践，保障高合规场景下的系统级稳定交付。"
-            />
-          </div>
-        </section>
-
-        {/* 工作经历 */}
-        <section id="experience" className="max-w-4xl mx-auto mb-32">
-          <h2 className="text-2xl font-bold mb-12 flex items-center gap-3">
-            <span className="w-8 h-[2px] bg-blue-500"></span> 工作经历
-          </h2>
-          
-          <div className="space-y-12">
-            <div className="relative pl-8 border-l border-slate-800">
-              <div className="absolute -left-[9px] top-0 w-4 h-4 bg-blue-600 rounded-full ring-4 ring-slate-950"></div>
-              
-              <div className="flex flex-wrap justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-2xl font-bold text-white">产品需求分析师</h3>
-                  <p className="text-blue-400 font-semibold uppercase tracking-wider text-sm mt-1">
-                    中汇亿达金融信息技术有限公司 (ComStar)
-                  </p>
-                </div>
-                <span className="text-xs font-mono text-slate-500 bg-slate-900 px-3 py-1 rounded-md border border-slate-800">
-                  2023.03 – 2026.03
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold mb-6">
+                <span className="flex h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                目前处于：上海 · 开放合作
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
+                你好，我是 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">{profile.name}</span>
+              </h1>
+              <p className="text-xl text-slate-400 mb-8 max-w-2xl leading-relaxed">
+                {profile.title}。{profile.subTitle}。
+                <span className="block mt-4 text-lg border-l-2 border-indigo-500 pl-4 bg-white/5 py-2 italic">
+                  "{profile.summary}"
                 </span>
+              </p>
+              
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-10 text-sm text-slate-400">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><Phone size={16}/> {profile.phone}</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><Mail size={16}/> {profile.email}</div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg"><MapPin size={16}/> {profile.location}</div>
               </div>
 
-              {/* 项目 1 */}
-              <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800/50 mb-6 hover:border-blue-500/30 transition-colors group">
-                <h4 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-blue-500 group-hover:translate-x-1 transition-transform" />
-                  银行间智能交易执行系统 (AI询报价机器人)
-                </h4>
-                <ul className="space-y-3 text-slate-400 text-sm">
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>基于NLP+决策引擎实现自动询价、动态策略报价与实时风控校验，已支撑 <strong>9家大型银行</strong> 自动化交易。</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>设计双边报价、换券等复杂流程，单机构日均处理询价 <strong>100+笔</strong>，具备高并发低延迟能力。</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>打造标准化API集成中枢，对接量化系统及 iDeal 等聊天工具，成为核心价源中心。</span>
-                  </li>
-                </ul>
+              <div className="flex gap-4 justify-center md:justify-start">
+                <button className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold shadow-xl shadow-indigo-600/20 transition-all flex items-center gap-2">
+                   立即联络 <ChevronRight size={18} />
+                </button>
+                <button className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl font-bold transition-all">
+                  查看项目集
+                </button>
               </div>
+            </div>
 
-              {/* 项目 2 */}
-              <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800/50 hover:border-blue-500/30 transition-colors group">
-                <h4 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-blue-500 group-hover:translate-x-1 transition-transform" />
-                  多资产统一订单管理系统 (OMS)
-                </h4>
-                <ul className="space-y-3 text-slate-400 text-sm">
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>统一治理多源异构意向数据，日均处理 <strong>300+笔</strong>，显著提升合规透明度。</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>机构自动化处理占比达 <strong>75%</strong>，将Pre-trade风控前移，显著收敛人工介入环节。</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-blue-500">•</span>
-                    <span>基于SoD原则设计权限模型，实现Sales与Trader职责分离，满足强监管审计要求。</span>
-                  </li>
-                </ul>
+            <div className="w-64 h-64 md:w-80 md:h-80 relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl rotate-6 group-hover:rotate-3 transition-transform duration-500"></div>
+              <div className="absolute inset-0 bg-slate-800 rounded-3xl flex items-center justify-center overflow-hidden border border-white/10">
+                {/* 占位头像或图标 */}
+                <User size={120} className="text-slate-700" />
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 实习 & 调研 Grid */}
-        <section className="max-w-6xl mx-auto mb-32">
-          <h2 className="text-2xl font-bold mb-12 flex items-center gap-3">
-            <span className="w-8 h-[2px] bg-blue-500"></span> 实习与研究项目
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <ProjectItem 
-              icon={<BarChart2 />}
-              title="债券承做 | 申港证券"
-              time="2022.11 – 2022.12"
-              content="参与项目尽调与申报材料编写，支持ABS融资方案设计并推进项目过审。"
-            />
-            <ProjectItem 
-              icon={<Search />}
-              title="行研助理 | 海通证券"
-              time="2022.07 – 2022.10"
-              content="构建光伏、原油数据库，撰写20余份公司跟踪及行业研究报告。"
-            />
-            <ProjectItem 
-              icon={<Code />}
-              title="年报文本相似度量化策略"
-              content="提取近20年年报特征，通过文本相似度验证收益率显著关系，构建超额收益组合。"
-            />
-            <ProjectItem 
-              icon={<BookOpen />}
-              title="套期保值会计研究"
-              content="编写企业套保案例分析，研究规则变动影响；成果发表于《国际商务财会》。"
-            />
+      {/* 核心能力 Section */}
+      <section id="skills" className="py-20 bg-white/[0.02]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-sm font-bold text-indigo-500 tracking-widest uppercase mb-3">Core Competencies</h2>
+            <p className="text-3xl font-bold text-white">核心专业能力</p>
           </div>
-        </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {skills.map((skill, idx) => (
+              <div key={idx} className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-indigo-600/10 hover:border-indigo-500/30 transition-all group">
+                <div className="w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                  {skill.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{skill.name}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{skill.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {/* 教育背景 */}
-        <section id="education" className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-12 flex items-center gap-3">
-            <span className="w-8 h-[2px] bg-blue-500"></span> 教育背景
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-slate-900/50 p-8 rounded-3xl border border-slate-800">
-              <GraduationCap className="w-10 h-10 text-blue-500 mb-6" />
-              <h3 className="text-xl font-bold text-white mb-2">上海国家会计学院</h3>
-              <p className="text-blue-400 font-medium mb-4">金融硕士 (GPA: 3.46)</p>
-              <p className="text-slate-500 text-sm">2021 - 2023 | 衍生工具、机器学习、智能财务</p>
+      {/* 工作经历 Section */}
+      <section id="experience" className="py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+            <div>
+              <h2 className="text-sm font-bold text-indigo-500 tracking-widest uppercase mb-3">Career Path</h2>
+              <p className="text-3xl font-bold text-white">职业历程</p>
             </div>
-            <div className="bg-slate-900/50 p-8 rounded-3xl border border-slate-800">
-              <GraduationCap className="w-10 h-10 text-slate-500 mb-6" />
-              <h3 className="text-xl font-bold text-white mb-2">山东财经大学</h3>
-              <p className="text-slate-400 font-medium mb-4">信用管理学士 (GPA: 3.76)</p>
-              <p className="text-slate-500 text-sm">2016 - 2020 | 信用风险、计量经济学、投资评估</p>
+            <div className="text-slate-500 text-sm font-mono">3 Years of FinTech Experience</div>
+          </div>
+
+          <div className="space-y-12">
+            {experiences.map((exp, idx) => (
+              <div key={idx} className="relative pl-8 md:pl-0">
+                {/* 时间轴线 */}
+                <div className="hidden md:block absolute left-[50%] top-0 bottom-0 w-px bg-white/10"></div>
+                
+                <div className={`md:flex items-start gap-12 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                  <div className="md:w-1/2 mb-8 md:mb-0">
+                    <div className="bg-white/5 border border-white/10 p-8 rounded-3xl relative">
+                      <div className="absolute top-1/2 -translate-y-1/2 hidden md:block w-4 h-4 rounded-full bg-indigo-600 border-4 border-[#050505] z-10" 
+                           style={{ [idx % 2 === 0 ? 'left' : 'right']: '-42px' }}></div>
+                      
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-indigo-400 font-bold text-sm">{exp.period}</span>
+                        <Briefcase size={16} className="text-slate-600" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-1">{exp.company}</h3>
+                      <p className="text-indigo-300 font-medium mb-6">{exp.role}</p>
+                      
+                      <div className="space-y-6">
+                        {exp.projects.map((proj, pIdx) => (
+                          <div key={pIdx}>
+                            <h4 className="flex items-center gap-2 text-white font-bold mb-3">
+                              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                              {proj.name}
+                            </h4>
+                            <ul className="space-y-2">
+                              {proj.highlights.map((h, hIdx) => (
+                                <li key={hIdx} className="text-slate-400 text-sm flex gap-2">
+                                  <span className="text-indigo-500/50 mt-1">•</span> {h}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="md:w-1/2"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 教育与实习 Section */}
+      <section id="education" className="py-20 bg-white/[0.02]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* 教育背景 */}
+            <div>
+              <div className="flex items-center gap-3 mb-10">
+                <BookOpen className="text-indigo-500" />
+                <h2 className="text-2xl font-bold text-white">教育背景</h2>
+              </div>
+              <div className="space-y-8">
+                <EduCard 
+                  school="上海国家会计学院" 
+                  degree="金融硕士 (GPA: 3.46)" 
+                  time="2021.08 – 2023.06"
+                  details="主修：金融衍生工具、风险管理、机器学习、智能财务等。"
+                />
+                <EduCard 
+                  school="山东财经大学" 
+                  degree="信用管理学士 (GPA: 3.76)" 
+                  time="2016.09 – 2020.06"
+                  details="主修：信用风险管理、计量经济学、金融信托、投资项目评估等。"
+                />
+              </div>
+            </div>
+
+            {/* 实习/研究项目 */}
+            <div>
+              <div className="flex items-center gap-3 mb-10">
+                <Award className="text-indigo-500" />
+                <h2 className="text-2xl font-bold text-white">研究与实习</h2>
+              </div>
+              <div className="space-y-4">
+                <ProjectSnippet title="海通证券 · 行业研究助理" desc="覆盖光伏、原油数据库，撰写20余份跟踪报告。" />
+                <ProjectSnippet title="申港证券 · 债券承做" desc="深度参与项目尽调、材料申报及ABS融资方案设计。" />
+                <ProjectSnippet title="年报文本相似度投资策略" desc="基于NLP处理近20年年报，验证文本相似度与收益率关系。" />
+                <ProjectSnippet title="期货套保会计研究" desc="论文发表于《国际商务财会》，研究准则演变影响。" />
+              </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      {/* Footer */}
-      <footer className="py-20 border-t border-slate-900 text-center">
-        <p className="text-slate-600 text-sm mb-4 italic">“致力于用AI与数据驱动金融交易的下一次迭代”</p>
-        <p className="text-slate-700 text-xs">© 2026 夏雨. Built with React & Tailwind.</p>
+      {/* 底部 Footer */}
+      <footer className="py-20 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold text-white mb-4">期待与您交流</h2>
+            <p className="text-slate-500">寻找金融交易系统智能化方向的挑战与机遇</p>
+          </div>
+          <div className="flex justify-center gap-6 mb-12">
+            <a href={`mailto:${profile.email}`} className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors">
+              <Mail size={20} />
+            </a>
+            <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer group relative">
+              <MessageSquare size={20} />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-white text-black text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                微信: 15254109003
+              </div>
+            </div>
+          </div>
+          <p className="text-slate-600 text-xs">© 2026 夏雨 · 个人职业作品集 · 基于 React & Tailwind 构建</p>
+        </div>
       </footer>
     </div>
   );
 };
 
-// 辅助组件：核心能力卡片
-const CapabilityCard = ({ icon, title, desc }) => (
-  <div className="p-8 bg-slate-900/50 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all hover:-translate-y-1">
-    <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center mb-6">
-      {icon}
+const EduCard = ({ school, degree, time, details }) => (
+  <div className="group">
+    <div className="flex justify-between items-start mb-2">
+      <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">{school}</h3>
+      <span className="text-xs text-slate-500 font-mono">{time}</span>
     </div>
-    <h3 className="font-bold text-slate-200 mb-3 text-lg">{title}</h3>
-    <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
+    <p className="text-indigo-300 text-sm mb-2">{degree}</p>
+    <p className="text-slate-500 text-xs leading-relaxed">{details}</p>
   </div>
 );
 
-// 辅助组件：项目/实习项
-const ProjectItem = ({ icon, title, time, content }) => (
-  <div className="flex gap-6 p-4 rounded-2xl hover:bg-slate-900/30 transition-colors">
-    <div className="flex-shrink-0 w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400">
-      {React.cloneElement(icon, { size: 20 })}
+const ProjectSnippet = ({ title, desc }) => (
+  <div className="p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-all">
+    <div className="flex justify-between items-center mb-1">
+      <h4 className="text-sm font-bold text-slate-200">{title}</h4>
+      <ExternalLink size={12} className="text-slate-600" />
     </div>
-    <div>
-      <h3 className="font-bold text-slate-200">{title}</h3>
-      {time && <p className="text-xs font-mono text-slate-600 my-1">{time}</p>}
-      <p className="text-sm text-slate-500 mt-2 leading-relaxed">{content}</p>
-    </div>
+    <p className="text-xs text-slate-500">{desc}</p>
   </div>
+);
+
+const Layers = ({ size, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
 );
 
 export default App;
